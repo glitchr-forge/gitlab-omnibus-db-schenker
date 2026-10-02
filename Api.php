@@ -32,10 +32,10 @@ final class Api
             $status = $response->getStatusCode();
             $data = json_decode($response->getContent(false), true);
         } catch (HttpExceptionInterface $e) {
-            throw new CarrierException('db-schenker', 'DB Schenker tracking failed: '.$e->getMessage(), null, $e);
+            throw new CarrierException('db_schenker', 'DB Schenker tracking failed: '.$e->getMessage(), null, $e);
         }
         if ($status >= 400 || !\is_array($data)) {
-            throw new CarrierException('db-schenker', sprintf('DB Schenker tracking answered HTTP %d.', $status));
+            throw new CarrierException('db_schenker', sprintf('DB Schenker tracking answered HTTP %d.', $status));
         }
 
         return $data;
@@ -45,7 +45,7 @@ final class Api
     public function call(string $method, string $path, ?array $body = null): array
     {
         if (!$this->apiKey || !$this->accountNumber) {
-            throw new CarrierException('db-schenker', 'Bookings need the Open API key and the account number (options api_key, account_number).');
+            throw new CarrierException('db_schenker', 'Bookings need the Open API key and the account number (options api_key, account_number).');
         }
         try {
             $response = $this->http->request($method, self::BOOKING.$path, [
@@ -56,13 +56,13 @@ final class Api
             $status = $response->getStatusCode();
             $data = json_decode($response->getContent(false), true);
         } catch (HttpExceptionInterface|\JsonException $e) {
-            throw new CarrierException('db-schenker', 'DB Schenker request failed: '.$e->getMessage(), null, $e);
+            throw new CarrierException('db_schenker', 'DB Schenker request failed: '.$e->getMessage(), null, $e);
         }
         if (!\is_array($data)) {
-            throw new CarrierException('db-schenker', sprintf('DB Schenker answered HTTP %d with a body that is not JSON.', $status));
+            throw new CarrierException('db_schenker', sprintf('DB Schenker answered HTTP %d with a body that is not JSON.', $status));
         }
         if ($status >= 400) {
-            throw new CarrierException('db-schenker', (string) ($data['message'] ?? $data['error'] ?? $data['errors'][0]['message'] ?? sprintf('HTTP %d', $status)), isset($data['code']) ? (string) $data['code'] : null);
+            throw new CarrierException('db_schenker', (string) ($data['message'] ?? $data['error'] ?? $data['errors'][0]['message'] ?? sprintf('HTTP %d', $status)), isset($data['code']) ? (string) $data['code'] : null);
         }
 
         return $data;

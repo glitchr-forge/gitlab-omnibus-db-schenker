@@ -43,10 +43,10 @@ final class ShippingAction implements ActionInterface, ApiAwareInterface
         ]));
         $number = (string) ($data['bookingNumber'] ?? $data['shipmentNumber'] ?? $data['id'] ?? '');
         if ('' === $number) {
-            throw new CarrierException('db-schenker', 'DB Schenker booked no shipment.');
+            throw new CarrierException('db_schenker', 'DB Schenker booked no shipment.');
         }
         $label = $data['labelUrl'] ?? $data['documents'][0]['url'] ?? null;
-        $request->setResult(new Label('db-schenker', $number, null, Label::PDF, \is_string($label) ? $label : null, 'https://eschenker.dbschenker.com/app/tracking-public/?refNumber='.rawurlencode($number)));
+        $request->setResult(new Label('db_schenker', $number, null, Label::PDF, \is_string($label) ? $label : null, 'https://eschenker.dbschenker.com/app/tracking-public/?refNumber='.rawurlencode($number)));
     }
 
     private static function party(Address $a): array

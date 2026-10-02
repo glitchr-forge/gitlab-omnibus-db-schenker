@@ -24,7 +24,7 @@ final class DbSchenkerGatewayFactory extends GatewayFactory
     protected function populateConfig(Config $config): void
     {
         $config->defaults([
-            'omnibus.factory_name' => 'db-schenker',
+            'omnibus.factory_name' => 'db_schenker',
             'omnibus.factory_title' => 'DB Schenker',
             'omnibus.required_options' => [],
             'api_key' => null,

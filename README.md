@@ -8,8 +8,8 @@ by contract.
 ```yaml
 omnibus:
     gateways:
-        db-schenker:
-            factory: db-schenker
+        db_schenker:
+            factory: db_schenker
             options:
                 api_key: '%env(SCHENKER_API_KEY)%'        # optional: bookings
                 account_number: '%env(SCHENKER_ACCOUNT)%'
